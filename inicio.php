@@ -10,7 +10,8 @@ function menu()
 }
 function contenido()
 {
-echo "<p align=center> Bienvenido al aplicativo VOTACIONES VIRTUALES </p>";
+echo "<p align=center> Bienvenido al aplicativo VOTACIONES VIRTUALES </p>
+<br> Prueba de rama desarrolo";
 //header("Location: $redireccion");
 }
 include($plantilla);
