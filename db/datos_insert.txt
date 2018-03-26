@@ -1,4 +1,0 @@
-INSERT INTO "candidatos" ("id_candidato", "id_partido", "cedula", "nombres", "apellidos", "foto", "activo", "fecha_ingreso", "fecha_update") VALUES
-(1, 1, 454645466, "Ivan", "Duque", "/imagenes/perfiles/candidatos/ivanduque.png", 1, "2018-03-20", NULL),
-(2, 3, 546446222, "Gustavo", "Petro", "/imagenes/perfiles/candidatos/gustavopetro.png", 1, "2018-03-20", NULL),
-(3, 2, 345332234, "Aurelio", "Iragorri", "/imagenes/perfiles/candidatos/aurelioiragorri", 1, "2018-03-20", NULL);
