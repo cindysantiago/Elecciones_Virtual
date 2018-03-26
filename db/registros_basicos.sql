@@ -28,9 +28,9 @@ USE `votaciones`;
 --
 
 INSERT INTO `candidatos` (`id_candidato`, `id_partido`, `cedula`, `nombres`, `apellidos`, `foto`, `activo`, `fecha_ingreso`, `fecha_update`) VALUES
-(1, 1, 454645466, 'Ivan', 'Duque', '/imagenes/perfiles/candidatos/ivanduque.png', 1, '2018-03-20', NULL),
-(2, 3, 546446222, 'Gustavo', 'Petro', '/imagenes/perfiles/candidatos/gustavopetro.png', 1, '2018-03-20', NULL),
-(3, 2, 345332234, 'Aurelio', 'Iragorri', '/imagenes/perfiles/candidatos/aurelioiragorri', 1, '2018-03-20', NULL);
+(1, 1, 454645466, 'Ivan', 'Duque', '/imagenes/perfiles/candidatos/1.png', 1, '2018-03-20', NULL),
+(2, 3, 546446222, 'Gustavo', 'Petro', '/imagenes/perfiles/candidatos/2.png', 1, '2018-03-20', NULL),
+(3, 2, 345332234, 'Aurelio', 'Iragorri', '/imagenes/perfiles/candidatos/3', 1, '2018-03-20', NULL);
 
 --
 -- Volcado de datos para la tabla `ciudadanos`
@@ -65,9 +65,9 @@ INSERT INTO `departamentos` (`id_departamento`, `id_region`, `descripcion`) VALU
 --
 
 INSERT INTO `partidos` (`id_partido`, `nombre`, `descripcion`, `logo`) VALUES
-(1, 'Centro Democrático', 'Somos un grupo de ciudadanos de diversos orígenes políticos –liberales, conservadores, de la U, de la izquierda democrática-, movimientos y sin partido, preocupados por el presente y el futuro de Colombia', 'imagenes/perfiles/partidos/logocd.png'),
-(2, 'Partido de la Unidad', 'Somos una organización política con fuerte vocación social, interesada en la búsqueda de la reconciliación nacional y la paz, y en la construcción de un nuevo país sobre las premisas de la igualdad de oportunidades y la equidad.', 'imagenes/perfiles/partidos/logou.png'),
-(3, 'Colombia Humana', 'dsfdjfnsdkfbdskfjbsfkjdbsfkjabfjadbfjkdbfkdbfdkjbfdkjbdfbjfdbjfdbfjdfsj', 'imagenes/perfiles/partidos/ColHumana.png');
+(1, 'Centro Democrático', 'Somos un grupo de ciudadanos de diversos orígenes políticos –liberales, conservadores, de la U, de la izquierda democrática-, movimientos y sin partido, preocupados por el presente y el futuro de Colombia', 'imagenes/perfiles/partidos/1.png'),
+(2, 'Partido de la Unidad', 'Somos una organización política con fuerte vocación social, interesada en la búsqueda de la reconciliación nacional y la paz, y en la construcción de un nuevo país sobre las premisas de la igualdad de oportunidades y la equidad.', 'imagenes/perfiles/partidos/2.png'),
+(3, 'Colombia Humana', 'dsfdjfnsdkfbdskfjbsfkjdbsfkjabfjadbfjkdbfkdbfdkjbfdkjbdfbjfdbjfdbfjdfsj', 'imagenes/perfiles/partidos/3.png');
 
 --
 -- Volcado de datos para la tabla `regiones`
