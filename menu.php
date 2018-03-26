@@ -21,6 +21,12 @@ echo "<li><a href=\"votaciones.php\">Votación</a>";
 	echo "<li><a href=\"usuarios.php\">Usuarios</a></li>";
 echo "</ul>";*/
 echo "</li>";
+echo "<li><a href=\"#\">Administración</a>";
+echo "<ul>";	
+	echo "<li><a href=\"candidatos.php\">Candidatos</a></li>";
+	//echo "<li><a href=\"usuarios.php\">Usuarios</a></li>";
+echo "</ul>";
+echo "</li>";
 ?>
 <li><a href="#">Password</a></li>
 <!--password.php   logout.php-->

@@ -1,12 +1,15 @@
 <?php
  include_once 'adodb/adodb.inc.php';
-$db = ADOnewConnection('pdo'); 
+//$db = ADOnewConnection('mysqli'); 
+$db = newAdoConnection("mysqli");
 $server = 'localhost';
  $user = 'root';
  $namedb = 'votaciones';
 $password = '';
-$dsnString= 'host=$server;dbname=$namedb';
-$db->connect('mysql:' . $dsnString,$user,$password);
+/*$dsnString= 'host=$server;dbname=$namedb';
+$db->connect('mysql:' . $dsnString,$user,$password);*/
+$db->Connect($server,$user,$password,$namedb);
+
  $plantilla="plantilla.php";
 if (!function_exists('logger')) 
 {
@@ -35,7 +38,7 @@ if (!function_exists('session_register'))
     }
     }
 
- ini_set("display_errors",0);
+ ini_set("display_errors",1);
 
     foreach ($_REQUEST as $key => $value) {
     $value = addslashes($value);
