@@ -8,12 +8,21 @@ $op=$_REQUEST['op'];
 $idcandidato=$_REQUEST['idcandidato'];
 if($op=="delete" && $idcandidato!="")
 {
+	$sql6="SELECT foto FROM candidatos WHERE id_candidato='$idcandidato' ";
+  	$rs6=$db->execute($sql6)->getRows();
+	foreach ($rs6 as $linea) 
+	{
+		$foto=$linea['foto'];
+	}
 	$sql5="DELETE FROM candidatos WHERE id_candidato='$idcandidato' ";
 	$rs5=$db->Execute($sql5);
 	if($rs5)
+	{
 		$error=6;
+		unlink($foto);
+	}
 	else
-		$error=6;
+		$error=7;
 }
 if($boton1=="Guardar" ) //nuevo candidato
 {	
@@ -27,12 +36,7 @@ if($boton1=="Guardar" ) //nuevo candidato
 	if($rs5)
 	{
 		//guardar url de la foto
-		$fichero=$_FILES['file']['name'];	
-		//$fichero="";					
-		/*foreach ($array as &$valor) 
-		{
-			$fichero=$fichero.$valor;
-		}*/					
+		$fichero=$_FILES['file']['name'];								
 		$extension = end(explode(".", $fichero));
 		$ruta="imagenes/perfiles/candidatos/".$next.".".$extension;
 		$fichero_tipo=$extension;
@@ -40,11 +44,6 @@ if($boton1=="Guardar" ) //nuevo candidato
 		if (( ($fichero_tipo == "jpeg")	|| ($fichero_tipo == "png") || ($fichero_tipo == "jpg")) )   //($fichero_tipo== "gif") ||
 		{
 			$fichero_tmp=$_FILES['file']['tmp_name'];	
-			/*$fichero_tmp="";					
-			foreach ($array_tmp as &$valor) 
-			{
-				$fichero_tmp=$fichero_tmp.$valor;
-			}	*/					
 			if(copy($fichero_tmp, $ruta))
 			{
 				$sql5="UPDATE candidatos SET foto='$ruta' WHERE id_candidato=$next ";
@@ -127,10 +126,7 @@ function contenido()
 		foreach ($rs3 as $linea) 	
 		{        
 			$val=$linea['id_partido'];
-			$val2=$linea['nombre'];        
-			/*$ck="";
-			if($tipof==$val)
-				$ck="SELECTED";*/
+			$val2=$linea['nombre'];   
 			echo "<option value=\"$val\">$val2</option>";    
 		}
 		echo "</select><font color=red size=5> * </font></td></tr>	";
@@ -138,7 +134,7 @@ function contenido()
 		echo "<tr>";
 		echo "<td>Foto:</td>
 		<td>
-		<input type=\"file\" id=\"file\" name=\"file\" />
+		<input type=\"file\" id=\"file\" name=\"file\" required/>
 		<font color=red size=5> * </font></td>
 		</tr>";
 		echo "<tr>";
@@ -205,7 +201,6 @@ function contenido()
 				echo "<td>Inactivo</td>";
 			echo "<td align=right><p align=center><a href=candidatos2.php?idcandidato=$idcandidato title=\"Editar\"><img src=imagenes/iconos/page_edit.png border=0></a>";      
 			echo "<td align=right><p align=center><a href=candidatos.php?idcandidato=$idcandidato&op=delete title=\"Eliminar\"><img src=imagenes/iconos/no.png border=0></a>";      
-			//echo "&nbsp;&nbsp;&nbsp;<a href=centros.php?op=elim&idcentro=$idcentro title=\"Eliminar\"><img src=imagenes/iconos/no.png border=0></a>";				
 			echo "</p></td>";                  
 			echo "</tr>";  
 	}
@@ -214,8 +209,7 @@ function contenido()
 	}
 	else
 		echo "<p align=center>No se encontraron resultados </p>";
-	echo "<br><br>";
-	 
+	echo "<br><br>";	 
 }
 include($plantilla);
 ?>
