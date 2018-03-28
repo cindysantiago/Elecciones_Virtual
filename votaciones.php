@@ -4,13 +4,10 @@ $ID=$_SESSION['ID'];
 include("verificar.php");*/
 include("include.inc.php");
 $boton1=$_REQUEST['boton1'];
-$val=$_REQUEST['id_ciudad'];
-$candidato=$_REQUEST['id_candidato'];
+
+
 
 //$permiso=$_REQUEST['permiso'];
-
-//echo $val;
-
 
 
 if($boton1=="Votar") //votación del candidato
@@ -19,7 +16,7 @@ if($boton1=="Votar") //votación del candidato
 	$rs4=$db->getOne($sql4);
 	$next=$rs4+1;
 	
-	$sql5="INSERT INTO  votaciones (id_voto,id_candidato,id_ciudad,fecha_hora) VALUES ('$next','$candidato','$val',now())";
+	$sql5="INSERT INTO  votaciones (id_voto,id_candidato,id_ciudad,fecha_hora) VALUES ('$next','$_REQUEST[president]','$_REQUEST[ciudad]',now())";
 	$rs5=$db->Execute($sql5);    
 		
 	if($rs5)
