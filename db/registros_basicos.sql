@@ -30,7 +30,7 @@ USE `votaciones`;
 INSERT INTO `candidatos` (`id_candidato`, `id_partido`, `cedula`, `nombres`, `apellidos`, `foto`, `activo`, `fecha_ingreso`, `fecha_update`) VALUES
 (1, 1, 454645466, 'Ivan', 'Duque', '/imagenes/perfiles/candidatos/1.png', 1, '2018-03-20', NULL),
 (2, 3, 546446222, 'Gustavo', 'Petro', '/imagenes/perfiles/candidatos/2.png', 1, '2018-03-20', NULL),
-(3, 2, 345332234, 'Aurelio', 'Iragorri', '/imagenes/perfiles/candidatos/3', 1, '2018-03-20', NULL);
+(3, 2, 345332234, 'Aurelio', 'Iragorri', '/imagenes/perfiles/candidatos/3.png', 1, '2018-03-20', NULL);
 
 --
 -- Volcado de datos para la tabla `ciudadanos`
