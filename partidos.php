@@ -52,7 +52,8 @@ if(isset($_REQUEST['boton1']))
 		{
 			//guardar url de la foto
 			$fichero=$_FILES['file']['name'];					
-			$extension = end(explode(".", $fichero));
+			$tmp = explode(".", $fichero);
+			$extension = end($tmp);
 			$ruta="imagenes/perfiles/partidos/".$next.".".$extension;
 			$fichero_tipo=$extension;
 			$allowedExts = array("jpg", "jpeg", "gif", "png", "JPG", "GIF", "PNG");
@@ -98,7 +99,8 @@ if(isset($_REQUEST['boton1']))
 				unlink($logo);
 
 				$fichero=$_FILES['file']['name'];					
-				$extension = end(explode(".", $fichero));
+				$tmp = explode(".", $fichero);
+				$extension = end($tmp);
 				$ruta="imagenes/perfiles/partidos/".$idpartido.".".$extension;
 				$fichero_tipo=$extension;
 				$allowedExts = array("jpg", "jpeg", "gif", "png", "JPG", "GIF", "PNG");
