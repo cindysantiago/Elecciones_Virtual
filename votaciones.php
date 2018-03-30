@@ -3,67 +3,119 @@
 $ID=$_SESSION['ID'];
 include("verificar.php");*/
 include("include.inc.php");
-$op=$_REQUEST['op'];
-$permiso=$_REQUEST['permiso'];
-if($op=="votar" AND $idcandidato!="")
-{
-	   /* $sql6="DELETE FROM permisos WHERE permiso='$permiso'";
-	    $rs6=$conn->Execute($sql6); */
-	    //echo $sql6;
-	    $error=2;
+$boton1=$_REQUEST['boton1'];
+
+
+
+//$permiso=$_REQUEST['permiso'];
+
+
+if($boton1=="Votar") //votación del candidato
+{	
+	$sql4="SELECT max(id_voto) FROM  votaciones";
+	$rs4=$db->getOne($sql4);
+	$next=$rs4+1;
+	
+	$sql5="INSERT INTO  votaciones (id_voto,id_candidato,id_ciudad,fecha_hora) VALUES ('$next','$_REQUEST[president]','$_REQUEST[ciudad]',now())";
+	$rs5=$db->Execute($sql5);    
+		
+	if($rs5)
+	
+		$error=1;
+	else
+		$error=2;
+			
+	
 }
+
 function menu()
 {
 	include("menu.php");
 }
 function contenido()
 {
-	global $conn,$ID,$filtro,$pagina,$error; 
-	$pagina=$_REQUEST['pagina'];
-	$filtro=$_REQUEST['filtro'];
-	$tam_pagina=10; 
-	$condi="";
-	if (!isset($filtro)) $filtro=$_REQUEST['filtro']; 
-	if($error==2)
+	global $db,$ID,$filtro,$pagina,$error; 
+	
+	if($error==1)
 	{
 		echo "<p align=center>Gracias por votar</p>";
 	}
+	
+	if($error==2)
+	{
+		echo "<p align=center>No se pudo registrar su voto</p>";
+	}
 
-    $sql = "select id_candidato, nombres, apellidos  from candidatos order by nombres AND apellidos DESC ";
-    $_REQUEST = mysqli_query($sql);
+echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
+    $sql1 = "SELECT  id_candidato, id_partido, nombres, apellidos,foto  FROM candidatos ORDER BY nombres, apellidos ";
+    $rs1=$db->execute($sql1)->getRows();
+    if($rs1)
+    {
+    echo"<form name=form2 id=form2 method=post action=votaciones.php>";
+    echo '<table class="table table-striped table-bordered table-hover" id="dataTable1" align=center>';
+		echo "<thead><tr>
+		<th>Foto</th>
+		<th>Nombre</th>
+		<th>Partido</th>		
+		</tr></thead>";   
+		echo "<ul>\n";
+		echo "<tbody>";
+		$c=0;
+    
+     // while ($arreglo = mysql_fetch_array($rs1))
+      foreach ($rs1 as $dato)
+      {
+      $c++;
+		$d=$c%2;
+			if ($d == 0) 
+				$color="#CEECF5";
+			else 	
+				$color="#E6E6E6";
+			echo "<tr bgcolor='$color'>";      
+		
+      
+   echo "<td><input  type='radio' name='president' value=".$dato['id_candidato']." /> <label ><img src='".$dato['foto']."' width=70px height=80px></label ></td>";
+   echo"<td>".$dato['nombres']." ".$dato['apellidos']."</td>";
+  $sql2="SELECT logo,nombre FROM partidos WHERE id_partido=".$dato['id_partido'];
+	$rs2=$db->execute($sql2)->getRows();
+	foreach ($rs2 as $dato2)
+	{
+	echo "<td align=center><img src='".$dato2['logo']."' width=80px height=60px><br>".$dato2['nombre']."</td>";
+	}
 
-    while ($arreglo = mysqli_fetch_array($_REQUEST))
-	echo "<h1>VOTACION</h1>";
-	echo "<form name=form2 id=form2 method=post action=votaciones.php>";
-	echo "<table class=formtable>";
-    echo "<tr><th>";
-    echo "Seleccione el Candidato Presidencial";
-    echo "</th></tr>";
-
-    echo "<td>";
-	//aqui debe ir la lista de candidatos con opcion de seleccion unica
-	echo "<input type='radio' name='president' value='p1' id='p1' /> <label for='p1'> Sergio Fajardo</label ><br>";
-    echo "<input type='radio' name='president' value='p2' id='p2' /> <label for='p2'> Humberto de la Calle</label ><br>";
-    echo "<input type='radio' name='president' value='p3' id='p3' /> <label for='p3'> Piedad Cordoba</label ><br>";
-    echo "<input type='radio' name='president' value='p4' id='p4' /> <label for='p4'> Ivan Duque Marquez</label ><br>";
-    echo "<input type='radio' name='president' value='p5' id='p5' /> <label for='p5'> Gustavo Petro</label ><br>";
-    echo "<input type='radio' name='president' value='p6' id='p6' /> <label for='p6'> German Vargas Lleras</label ><br>";
-    echo "<input type='radio' name='president' value='p7' id='p7' /> <label for='p7'> Viviane Morales</label ><br>";
-    echo "</td>";
-    /*echo "<td>";
-	echo "hhhh: ";
-	echo "</td>";
-	echo "<td>";
-	echo "<input type=text name=filtro id=filtro value='$filtro'>"; 
-	echo "</td>";
-    */
-	echo "<td>
-	<div align=center>
-	    <input type=submit name=Submit value=Votar>
-	    </div>    
-	    </td>
-	    </tr>
-	    </table></form>";
+   }
+   
+   echo"</tr></table>"; 
+}
+	else
+		echo "<p align=center>No se encontraron resultados </p>";
+	echo "<br><br>";
+	
+	
+   echo "<tr>";
+   echo"<td><p align=center>Ciudad o Municipio de Votación:</td> ";
+   echo "<td>";
+   $sql3="SELECT id_ciudad,descripcion FROM  ciudades ORDER BY descripcion";
+	$rs3=$db->execute($sql3)->getRows();
+	echo "<select name=ciudad id=ciudad required>"; 
+	foreach ($rs3 as $dato3)
+	{
+		$val=$dato3['id_ciudad'];
+		$val2=$dato3['descripcion'];        
+			
+			echo "<option value=\"$val\">$val2</option></p>";    
+	}
+   echo "</select><font color=red size=5> * </font></td></p></tr>	";
+   
+   echo "<tr>
+		<td colspan=2><label>
+		<div align=center>
+		<input type=submit name=boton1 value=Votar>
+		</div>
+		</label>
+		</td>
+		</tr>
+		</form>";
  
 }
 include($plantilla);
