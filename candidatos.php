@@ -5,7 +5,7 @@ include("verificar.php");*/
 include("include.inc.php");
 $boton1=$_REQUEST['boton1'];
 $op=$_REQUEST['op'];
-$idcandidato=$_REQUEST['idcandidato'];
+//$idcandidato=$_REQUEST['idcandidato'];
 if($op=="delete" && $idcandidato!="")
 {
 	$sql6="SELECT foto FROM candidatos WHERE id_candidato='$idcandidato' ";
