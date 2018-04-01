@@ -7,9 +7,6 @@ $boton1=$_REQUEST['boton1'];
 
 
 
-//$permiso=$_REQUEST['permiso'];
-
-
 if($boton1=="Votar") //votación del candidato
 {	
 	$sql4="SELECT max(id_voto) FROM  votaciones";
@@ -38,13 +35,20 @@ function contenido()
 	
 	if($error==1)
 	{
-		echo "<p align=center>Gracias por votar</p>";
+	
+		echo "<p align=center><b><font color=#08779B size='5'>¡Gracias por votar!</font></b></p>";
+		echo "<br>";
+		echo "<h1><p align=center><a href=resultados.php>Ver resulados</a></p></h1>";
+		echo "<h1><p align=center>Imprimir Comprobante Electoral</a></p></h1>";
 	}
 	
 	if($error==2)
 	{
-		echo "<p align=center>No se pudo registrar su voto</p>";
+		echo "<p align=center><font size=3>No se pudo registrar su voto</font></p>";
 	}
+	
+	if($error!=1 && $error!=2)
+	{
 
 echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
     $sql1 = "SELECT  id_candidato, id_partido, nombres, apellidos,foto  FROM candidatos ORDER BY nombres, apellidos ";
@@ -62,7 +66,7 @@ echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
 		echo "<tbody>";
 		$c=0;
     
-     // while ($arreglo = mysql_fetch_array($rs1))
+
       foreach ($rs1 as $dato)
       {
       $c++;
@@ -116,6 +120,8 @@ echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
 		</td>
 		</tr>
 		</form>";
+		
+		}
  
 }
 include($plantilla);
