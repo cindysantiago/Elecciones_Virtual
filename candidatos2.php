@@ -1,53 +1,60 @@
 <?php 
-/*session_start();
-$ID=$_SESSION['ID'];
-include("verificar.php");*/
 include("include.inc.php");
 $boton1=$_REQUEST['boton1'];
 $op=$_REQUEST['op'];
 $idcandidato=$_REQUEST['idcandidato'];
-
+/*Inicia metodo para actualizar la información del candidato*/
 if($boton1=="Guardar" ) //actualizar candidato
-{			
-	$sql5="UPDATE candidatos SET id_partido='$_REQUEST[partido]',cedula='$_REQUEST[cedula]',nombres='$_REQUEST[nombres]',apellidos='$_REQUEST[apellidos]',activo='$_REQUEST[activo]',fecha_update=now() WHERE id_candidato='$idcandidato' ";
-	$rs5=$db->Execute($sql5);    
-	if($rs5)
+{	
+	//Evaluar que no exista un candidato con el numero de cedula que se desea ingresar en la actualización
+	$sql6="SELECT cedula FROM  candidatos WHERE cedula='$_REQUEST[cedula]' AND id_candidato!='$idcandidato'";
+	$rs6=$db->getOne($sql6);
+	if($rs6) //Si existe otro candidato con el mismo número de cédula
+		$error=5;
+	else //No existe otro candidato con el mismo número de cédula
 	{
-		//guardar url de la foto
-		$fichero=$_FILES['file']['name'];	
-		if($fichero!="")
-		{		
-			$extension = end(explode(".", $fichero));
-			$ruta="imagenes/perfiles/candidatos/".$idcandidato.".".$extension;
-			$fichero_tipo=$extension;
-			$allowedExts = array("jpg", "jpeg", "gif", "png", "JPG", "GIF", "PNG");
-			if (( ($fichero_tipo == "jpeg")	|| ($fichero_tipo == "png") || ($fichero_tipo == "jpg")) )   //($fichero_tipo== "gif") ||
-			{
-				$fichero_tmp=$_FILES['file']['tmp_name'];	
-				unlink($ruta);
-				if(copy($fichero_tmp, $ruta))
+		$sql5="UPDATE candidatos SET id_partido='$_REQUEST[partido]',cedula='$_REQUEST[cedula]',nombres='$_REQUEST[nombres]',apellidos='$_REQUEST[apellidos]',activo='$_REQUEST[activo]',fecha_update=now() WHERE id_candidato='$idcandidato' ";
+		$rs5=$db->Execute($sql5);    
+		if($rs5)
+		{
+			/* Inicia el proceso de guardar la url de la foto, actualizando el campo del registro del candidato */
+			$fichero=$_FILES['file']['name'];	
+			if($fichero!="")
+			{		
+				$extension = end(explode(".", $fichero));
+				$ruta="imagenes/perfiles/candidatos/".$idcandidato.".".$extension;
+				$fichero_tipo=$extension;
+				$allowedExts = array("jpg", "jpeg", "gif", "png", "JPG", "GIF", "PNG");
+				if (( ($fichero_tipo == "jpeg")	|| ($fichero_tipo == "png") || ($fichero_tipo == "jpg")) )   //($fichero_tipo== "gif") ||
 				{
-					$sql5="UPDATE candidatos SET foto='$ruta' WHERE id_candidato='$idcandidato' ";
-					$rs5=$db->Execute($sql5);   
-					if($rs5)
-						$error=1;
+					$fichero_tmp=$_FILES['file']['tmp_name'];	
+					unlink($ruta);
+					if(copy($fichero_tmp, $ruta))
+					{
+						$sql5="UPDATE candidatos SET foto='$ruta' WHERE id_candidato='$idcandidato' ";
+						$rs5=$db->Execute($sql5);   
+						if($rs5)
+							$error=1;
+						else
+							$error=4;
+					}
 					else
 						$error=4;
 				}
 				else
-					$error=4;
+					$error=3;
 			}
 			else
-				$error=3;
+				$error=1;
+			/* Finaliza el proceso de guardar la url de la foto, actualizando el campo del registro del candidato */
 		}
 		else
-			$error=1;
+		{
+				$error=2;
+		}	
 	}
-	else
-	{
-			$error=2;
-	}	
 }
+/*Finaliza metodo para actualizar la información del candidato*/
 function menu()
 {
 	include("menu.php");
@@ -55,6 +62,7 @@ function menu()
 function contenido()
 {
 	global $db,$ID,$idcandidato,$error; 	
+	/*Inicia metodo para consultar la información del candidato seleccionado*/
 	$sql1="SELECT id_candidato,id_partido,cedula,nombres,apellidos,foto,activo FROM candidatos WHERE id_candidato='$idcandidato' ";
   	$rs1=$db->execute($sql1)->getRows();
 	if($rs1)
@@ -71,6 +79,7 @@ function contenido()
 	}	
 	else
 		echo "<p align=center>No se encontraron resultados </p>";
+	/*Finaliza metodo para consultar la información del candidato seleccionado*/
 	
 	if($error==1)
 	{
@@ -88,6 +97,11 @@ function contenido()
 	{
 		echo "<p align=center><b><font color=red>Error: la nueva foto no pudo ser almacenada</font></b></p>";
 	} 
+	if($error==5)
+	{
+		echo "<p align=center><b><font color=red>Error: ya existe un candidato con ese número de cédula</font></b></p>";
+	}
+	/*Inicia la Estructura de formulario que el usuario puede ver y manipular*/
 	echo "<h1><a href=candidatos.php><--  Volver a Candidatos </a></h1>";
 	echo "<h1>EDITAR CANDIDATO</h1>";
 	echo "<form name=form1 id=valform method=post action=candidatos2.php enctype=\"multipart/form-data\">";
@@ -154,7 +168,8 @@ function contenido()
 		</td>
 		</tr>
 	</table>
-	</form><br>";		 
+	</form><br>";		
+	/*Finaliza la Estructura de formulario que el usuario puede ver y manipular*/
 }
 include($plantilla);
 ?>
