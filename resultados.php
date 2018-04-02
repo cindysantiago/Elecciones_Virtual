@@ -4,7 +4,7 @@ $ID=$_SESSION['ID'];
 include("verificar.php");*/
 include("include.inc.php");
 
-
+//Inicializa las propiedades del menú
 function menu()
 {
 	include("menu.php");
@@ -12,8 +12,10 @@ function menu()
 function contenido()
 {
 	global $db,$ID,$filtro,$pagina,$error; 
+	
+echo "<h1>RESULTADO PARCIAL ELECCIONES PRESIDENCIALES</h1>";
 
-$sql4="SELECT COUNT(id_voto) as votos, id_candidato as candidato  FROM votaciones ";
+$sql4="SELECT COUNT(id_voto) as votos, id_candidato as candidato  FROM votaciones ";//Consulta candidad de votos
 $rs4=$db->execute($sql4)->getRows();
 
 foreach ($rs4 as $cantidad)
@@ -23,11 +25,11 @@ echo " <p align=center><b><font color=#08779B size='3'>Total de votos: ".$cantid
  echo "<br>";
 }
 
-$sql="SELECT COUNT(id_voto) as votos, id_candidato   FROM votaciones GROUP BY id_candidato";
+$sql="SELECT COUNT(id_voto) as votos, id_candidato   FROM votaciones GROUP BY desc";// Consulta de votos por determinado candidato
 $rs=$db->execute($sql);
 
 
-if($rs)
+if($rs)// Inicializa la tabla para mostrar los valores de los votos 
 {
 echo '<table class="table table-striped table-bordered table-hover" id="dataTable1" align=center>';
 	echo "<thead><tr>
@@ -40,7 +42,7 @@ echo '<table class="table table-striped table-bordered table-hover" id="dataTabl
 	echo "<ul>\n";
 	echo "<tbody>";
 	$c=0;
-foreach ($rs as $voto)
+foreach ($rs as $voto)// captura los valores de la consulta  
 {
 $c++;
 		$d=$c%2;
@@ -54,7 +56,7 @@ $c++;
 			$id_candidato=$voto['id_candidato'];
 
 			echo "<th><p align=center>$id_voto</th>";
-			$porcentaje=($id_voto/$total)*100;
+			$porcentaje=($id_voto/$total)*100;// Función que calcula el porcentaje de cada candidato en relacion la cantidad total de votos
 			$totalp=round($porcentaje);
 			
 			echo "<th><p align=center>$totalp%</th>";
@@ -89,6 +91,6 @@ $c++;
 else
 	echo  "<p align=center>No se encontraron resultados</p>";
 	echo "<br><br>";
-}
+}// finalización de la función de mostrar los resultados de las votaciones
 include($plantilla);
 ?>
