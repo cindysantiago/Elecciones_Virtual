@@ -20,7 +20,7 @@ echo "<li><a href=\"votaciones.php\">Votaci&oacute;n</a>";
 	echo "<li><a href=\"usuarios.php\">Usuarios</a></li>";
 echo "</ul>";*/
 echo "</li>";
-echo "<li><a href=\"resultados.php\">Resultado Votación</a></li>";
+echo "<li><a href=\"resultados.php\">Resultados Votación</a></li>";
 echo "<li><a href=\"#\">Administraci&oacute;n</a>";
 echo "<ul>";	
 	echo "<li><a href=\"candidatos.php\">Candidatos</a></li>";
