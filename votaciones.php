@@ -6,10 +6,10 @@ include("include.inc.php");
 $boton1=$_REQUEST['boton1'];
 
 
-
-if($boton1=="Votar") //votación del candidato
+//metodo para guardar el voto en la base de datos
+if($boton1=="Votar") 
 {	
-	$sql4="SELECT max(id_voto) FROM  votaciones";
+	$sql4="SELECT max(id_voto) FROM  votaciones";//
 	$rs4=$db->getOne($sql4);
 	$next=$rs4+1;
 	
@@ -18,13 +18,13 @@ if($boton1=="Votar") //votación del candidato
 		
 	if($rs5)
 	
-		$error=1;
+		$error=1;//Si  se insertan los valores a la base de datos  aviso de confirmación
 	else
-		$error=2;
+		$error=2;//Si no, mensaje de no se pudo registrar el voto
 			
 	
-}
-
+}//Finaliza metodo para guardar los datos del nuevo  voto
+// LLamado al script con todos las propiedades del menú
 function menu()
 {
 	include("menu.php");
@@ -33,7 +33,7 @@ function contenido()
 {
 	global $db,$ID,$filtro,$pagina,$error; 
 	
-	if($error==1)
+	if($error==1)//Función que valida e informa al usuario si hubo ingreso de votos para continuar (mensajes)
 	{
 	
 		echo "<p align=center><b><font color=#08779B size='5'>¡Gracias por votar!</font></b></p>";
@@ -47,13 +47,14 @@ function contenido()
 		echo "<p align=center><font size=3>No se pudo registrar su voto</font></p>";
 	}
 	
-	if($error!=1 && $error!=2)
+	if($error!=1 && $error!=2)// Función que oculta la tabla se selección del voto
 	{
 
 echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
-    $sql1 = "SELECT  id_candidato, id_partido, nombres, apellidos,foto  FROM candidatos ORDER BY nombres, apellidos ";
+
+    $sql1 = "SELECT  id_candidato, id_partido, nombres, apellidos,foto  FROM candidatos ORDER BY nombres, apellidos ";// Llama los registros de los candidatos 
     $rs1=$db->execute($sql1)->getRows();
-    if($rs1)
+    if($rs1)  // Función que inicializa la tabla en donde se reflejara la consula de candidatos
     {
     echo"<form name=form2 id=form2 method=post action=votaciones.php>";
     echo '<table class="table table-striped table-bordered table-hover" id="dataTable1" align=center>';
@@ -67,7 +68,7 @@ echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
 		$c=0;
     
 
-      foreach ($rs1 as $dato)
+      foreach ($rs1 as $dato)//Función que captura los datos de la consulta
       {
       $c++;
 		$d=$c%2;
@@ -100,7 +101,8 @@ echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
    echo"<td><p align=center>Ciudad o Municipio de Votación:</td> ";
    echo "<td>";
    $sql3="SELECT id_ciudad,descripcion FROM  ciudades ORDER BY descripcion";
-	$rs3=$db->execute($sql3)->getRows();
+   
+	$rs3=$db->execute($sql3)->getRows();//Consulta  de las ciudades y muestra en un select
 	echo "<select name=ciudad id=ciudad required>"; 
 	foreach ($rs3 as $dato3)
 	{
@@ -123,6 +125,6 @@ echo "<h1>VOTACIÓN PRESIDENCIAL</h1>";
 		
 		}
  
-}
+}//Finaliza la estructura de lo datos de candidatos para votación
 include($plantilla);
 ?>
