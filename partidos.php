@@ -38,7 +38,7 @@ if($op=="delete" && $idpartido!="") // si la opción recibida fue delete y existe
 		$msg=7; //envío el mensaje correspondiente
 	}
 	else //si no se pudo eliminar el partido
-		$msg=8;//envío el mensaje correspondiente
+		$msg=9;//envío el mensaje correspondiente	
 }
 
 if(isset($_REQUEST['boton1'])) //si se recibio algun valor de boton1
@@ -97,8 +97,9 @@ if(isset($_REQUEST['boton1'])) //si se recibio algun valor de boton1
 		
 		if ($rs5) //si se pudo actualizar el registro
 		{
-			$fichero=$_FILES['file']['name'];
-			if ($fichero!="") //si se seleccionó algun archivo de imagen
+			//$fichero=$_FILES['file']['name'];
+			//if ($fichero!="") //si se seleccionó algun archivo de imagen
+			if (!empty($_FILES['file']['name']))
 			{
 				//Borro el logo actual del hdd
 				$sql5="SELECT logo from partidos where id_partido='$idpartido'";
@@ -133,8 +134,10 @@ if(isset($_REQUEST['boton1'])) //si se recibio algun valor de boton1
 					$msg=3; //envío el mensaje correspondiente
 			}
 			else
-				$msg=6; //envío el mensaje correspondiente
+				$msg=5; //envío el mensaje correspondiente
 		}
+		else
+			$msg=6; //envío el mensaje correspondiente
 	}
 }
 
@@ -173,6 +176,9 @@ function contenido()
  			break;
  		case '8':
  			echo "<p align=center><b><font color=red>Error: El partido político no pudo ser eliminado</font></b></p>";
+ 			break;
+ 		case '9':
+ 			echo "<p align=center><b><font color=red>Error: El partido político esta siendo usado y no pudo ser eliminado</font></b></p>";
  			break;
  		default:
  			break;
