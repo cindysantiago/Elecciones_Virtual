@@ -14,21 +14,29 @@ else
 /*Inicia metodo para eliminar el registro del candidato*/
 if($op=="delete" && $idcandidato!="")
 {
-	$sql6="SELECT foto FROM candidatos WHERE id_candidato='$idcandidato' ";
-  	$rs6=$db->execute($sql6)->getRows();
-	foreach ($rs6 as $linea) 
+	//Evaluar que no existan votos registrados para ese candidato
+	$sql7="SELECT count(*) FROM  votaciones WHERE id_candidato='$idcandidato' ";
+	$rs7=$db->getOne($sql7);
+	if($rs7>0) //El candidato tiene votos asociados
+		$error=8;
+	else //El candidato NO tiene votos asociados
 	{
-		$foto=$linea['foto'];
+		$sql6="SELECT foto FROM candidatos WHERE id_candidato='$idcandidato' ";
+		$rs6=$db->execute($sql6)->getRows();
+		foreach ($rs6 as $linea) 
+		{
+			$foto=$linea['foto'];
+		}
+		$sql5="DELETE FROM candidatos WHERE id_candidato='$idcandidato' ";
+		$rs5=$db->Execute($sql5);
+		if($rs5)
+		{
+			$error=6;
+			unlink($foto);
+		}
+		else
+			$error=7;
 	}
-	$sql5="DELETE FROM candidatos WHERE id_candidato='$idcandidato' ";
-	$rs5=$db->Execute($sql5);
-	if($rs5)
-	{
-		$error=6;
-		unlink($foto);
-	}
-	else
-		$error=7;
 }
 /*Finaliza metodo para eliminar el registro del candidato*/
 /*Inicia metodo para guardar los datos del nuevo  candidato*/
@@ -116,6 +124,10 @@ function contenido()
 	if($error==7)
 	{
 		echo "<p align=center><b><font color=red>Error: El candidato no pudo ser eliminado</font></b></p>";
+	} 
+	if($error==8)
+	{
+		echo "<p align=center><b><font color=red>Error: el candidato no puede ser eliminado, porque tiene votos asociados</font></b></p>";
 	} 
 	/*Inicia la Estructura de formulario que el usuario puede ver y usar para ingresar los datos del nuevo candidato*/
 	echo "<h1>CREAR CANDIDATO</h1>";	
