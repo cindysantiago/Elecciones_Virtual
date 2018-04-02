@@ -6,8 +6,6 @@ $server = 'localhost';
  $user = 'root';
  $namedb = 'votaciones';
 $password = '';
-/*$dsnString= 'host=$server;dbname=$namedb';
-$db->connect('mysql:' . $dsnString,$user,$password);*/
 $db->Connect($server,$user,$password,$namedb);
 
  $plantilla="plantilla.php";
@@ -38,7 +36,7 @@ if (!function_exists('session_register'))
     }
     }
 
- ini_set("display_errors",1);
+ ini_set("display_errors",0);
 
     foreach ($_REQUEST as $key => $value) {
     $value = addslashes($value);

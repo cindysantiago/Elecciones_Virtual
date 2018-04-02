@@ -2,6 +2,7 @@
 /*session_start();
 $ID=$_SESSION['ID'];
 include("verificar.php");*/
+include("include.inc.php");
 if(!isset($_REQUEST['op']))
 {
 	$op="list";
@@ -10,8 +11,6 @@ else
 {
 	$op=$_REQUEST['op'];
 }
-
-include("include.inc.php");
 if(isset($_REQUEST['idpartido']))
 	$idpartido=$_REQUEST['idpartido'];
 else
