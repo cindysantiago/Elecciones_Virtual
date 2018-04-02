@@ -137,7 +137,7 @@ if(isset($_REQUEST['boton1'])) //si se recibio algun valor de boton1
 				$msg=5; //envío el mensaje correspondiente
 		}
 		else
-			$msg=6; //envío el mensaje correspondiente
+			$msg=6; //envío el mensaje correspondiente 
 	}
 }
 
