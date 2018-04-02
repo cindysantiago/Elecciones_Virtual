@@ -21,6 +21,7 @@ echo "<li><a href=\"votaciones.php\">Votaci&oacute;n</a>";
 echo "</ul>";*/
 echo "</li>";
 echo "<li><a href=\"resultados.php\">Resultado Votación</a></li>";
+echo "<li><a href=\"certifica.php\">Certificado Votación</a></li>";
 echo "<li><a href=\"#\">Administraci&oacute;n</a>";
 echo "<ul>";	
 	echo "<li><a href=\"candidatos.php\">Candidatos</a></li>";
