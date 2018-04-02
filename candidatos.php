@@ -1,5 +1,6 @@
 <?php 
 include("include.inc.php");
+
 if(isset($_REQUEST['boton1'])  || isset($_REQUEST['op']))
 {
 $boton1=$_REQUEST['boton1'];
